@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseña para {{ pelicula.titulo }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
+
+    <meta property="og:title" content="Reseñas de Películas">
+    <meta property="og:description" content="¡El mejor sitio para encontrar y dejar reseñas de tus películas favoritas!">
+    <meta property="og:image" content="https://ejemplo.com/imagen-de-pelicula.jpg">
+    <meta property="og:url" content="https://ejemplo.com">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        body { background-color: var(--pico-background-color); color: var(--pico-color); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <a href="/" role="button" class="outline">← Volver a la lista</a>
+        <article>
+            <h2>Reseña para: {{ pelicula.titulo }}</h2>
+            <p>{{ pelicula.sinopsis }}</p>
+        </article>
+
+       <form action="{{ url_for('enviar_reseña', pelicula_id=pelicula.id) }}" method="post">
+            {{ form.csrf_token }} 
+            <label for="calificacion">Calificación (1-5)</label>
+            <input type="number" id="calificacion" name="calificacion" min="1" max="5" required>
+
+            <label for="comentario">Comentario</label>
+            <textarea id="comentario" name="comentario" rows="5" required></textarea>
+            
+            <button type="submit">Enviar Reseña</button>
+        </form>
+    </main>
+</body>
+</html>

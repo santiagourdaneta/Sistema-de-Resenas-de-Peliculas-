@@ -1,0 +1,25 @@
+# Directorios de entornos virtuales
+.venv/
+venv/
+env/
+
+# Archivos específicos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de la base de datos
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos de configuración y logs
+.env
+.flaskenv
+*.log
+
+# Archivos de paquetes de Python
+*.egg-info/
+dist/
+build/

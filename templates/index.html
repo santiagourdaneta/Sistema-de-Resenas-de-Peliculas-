@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas de Películas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css">
+
+    <meta property="og:title" content="Reseñas de Películas">
+    <meta property="og:description" content="¡El mejor sitio para encontrar y dejar reseñas de tus películas favoritas!">
+    <meta property="og:image" content="https://ejemplo.com/imagen-de-pelicula.jpg">
+    <meta property="og:url" content="https://ejemplo.com">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        body { background-color: var(--pico-background-color); color: var(--pico-color); }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>Nuestras Películas</h1>
+        <form action="{{ url_for('buscar') }}" method="get">
+  <input type="search" name="q" placeholder="Buscar películas...">
+  <button type="submit">Buscar</button>
+</form>
+        <p>¡Aquí puedes ver las películas disponibles y dejar tu reseña!</p>
+        
+      {% for pelicula in peliculas %}
+        <article>
+            <h2>{{ pelicula.titulo }}</h2>
+            <p>{{ pelicula.sinopsis }}</p>
+
+            {% if pelicula.reseñas %}
+                <h3>Reseñas:</h3>
+                <ul>
+                {% for reseña in pelicula.reseñas %}
+                    <li>Calificación: **{{ reseña[0] }}**/5 - Comentario: *{{ reseña[1] }}*</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aún no hay reseñas para esta película. ¡Sé el primero!</p>
+            {% endif %}
+
+            <a href="/review/{{ pelicula.id }}" role="button">Dejar una reseña</a>
+        </article>
+        {% endfor %}
+        <nav aria-label="Paginación">
+  <ul class="pagination">
+    {% if pagina_actual > 1 %}
+      <li><a href="{{ url_for('inicio', pagina=pagina_actual - 1) }}" role="button" class="outline">Anterior</a></li>
+    {% endif %}
+    {% for i in range(1, total_paginas + 1) %}
+      <li class="{% if i == pagina_actual %}active{% endif %}">
+        <a href="{{ url_for('inicio', pagina=i) }}" role="button">{{ i }}</a>
+      </li>
+    {% endfor %}
+    {% if pagina_actual < total_paginas %}
+      <li><a href="{{ url_for('inicio', pagina=pagina_actual + 1) }}" role="button" class="outline">Siguiente</a></li>
+    {% endif %}
+  </ul>
+</nav>
+    </main>
+</body>
+</html>
