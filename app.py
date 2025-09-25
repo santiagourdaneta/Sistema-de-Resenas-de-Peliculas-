@@ -114,4 +114,4 @@ def enviar_reseña(pelicula_id):
     return redirect(url_for('inicio'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
